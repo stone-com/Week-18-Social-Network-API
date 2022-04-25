@@ -1,4 +1,5 @@
 // require user model
+const res = require('express/lib/response');
 const { User } = require('../models');
 
 // initiate the user controller
@@ -66,4 +67,54 @@ const userController = {
       })
       .catch((err) => res.status(400).json(err));
   },
+  // delete a user by their ID
+  deleteUser({ params }, res) {
+    User.findOneAndDelete({ _id: params.id })
+      .then((results) => {
+        // if no user with that ID found, set status to 404 and respond with message
+        if (!results) {
+          res
+            .status(404)
+            .json({ message: 'No user with that ID found, try again' });
+          return;
+        }
+        // else, respond with results
+        res.json(results);
+      })
+      .catch((err) => res.status(400).json(err));
+  },
+  // add a friend
+  addFriend({ params }, res) {
+    User.findOneAndUpdate(
+      { _id: params.id },
+      { $addToSet: { friends: params.friendsId } },
+      { new: true }
+    )
+      .then((results) => res.status(200).json(results))
+      .catch((err) => res.status(400).json(err));
+  },
+  // delete a friend
+  removeFriend({ params }, res) {
+    //    use findoneand update rather than findoneanddelete, because we need to remove the friend from the User model instead of just deleting the friend
+    User.findOneAndUpdate(
+      { _id: params.id },
+      { $pull: { friends: params.friendsId } },
+      { new: true }
+    )
+      .then((results) => {
+        // if no results, set status to 404 and reply with message
+        if (!results) {
+          res
+            .status(404)
+            .json({ message: 'No results found with that ID, try again' });
+          return;
+        }
+        // else, respond with results
+        res.json(results);
+      })
+      .catch((err) => res.status(400).json(err));
+  },
 };
+
+// export
+module.exports = userController;
