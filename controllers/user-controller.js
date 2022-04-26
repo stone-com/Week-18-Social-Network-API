@@ -94,7 +94,7 @@ const userController = {
       .catch((err) => res.status(400).json(err));
   },
   // delete a friend
-  removeFriend({ params }, res) {
+  deleteFriend({ params }, res) {
     //    use findoneand update rather than findoneanddelete, because we need to remove the friend from the User model instead of just deleting the friend
     User.findOneAndUpdate(
       { _id: params.id },
