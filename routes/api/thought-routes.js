@@ -21,7 +21,7 @@ router
   .put(updateThought)
   .delete(deleteThought);
 
-// POST and DELETE routes to create and delete reactions. /api/:thoughtId/reactions
+// POST and DELETE routes to create and delete reactions. /api/thoughts/:thoughtId/reactions
 router.route('/:thoughtId/reactions').post(addReaction).delete(deleteReaction);
 
 // export
