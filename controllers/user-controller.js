@@ -18,7 +18,7 @@ const userController = {
       })
       .select('-__v')
       .then((results) => res.json(results))
-      .catch((err) => res.status(500).json(err));
+      .catch((err) => res.status(500).json(err))
   },
   // get one user by ID
   getUserById({ params }, res) {

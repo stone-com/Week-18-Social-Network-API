@@ -12,7 +12,7 @@ const thoughtController = {
       })
       .populate({
         path: 'thoughts',
-        select: '-__',
+        select: '-__v',
       })
       .select('-__v')
       .then((results) => res.json(results))
@@ -48,7 +48,7 @@ const thoughtController = {
         // find user and add new thought
         return User.findOneAndUpdate(
           { _id: body.userId },
-          { $push: { thoughts: results._id } },
+          { $addToSet: { thoughts: results._id } },
           { new: true }
         );
       })
