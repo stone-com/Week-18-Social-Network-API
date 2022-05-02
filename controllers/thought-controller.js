@@ -10,10 +10,10 @@ const thoughtController = {
         path: 'reactions',
         select: '-__v',
       })
-      .populate({
-        path: 'thoughts',
-        select: '-__v',
-      })
+      // .populate({
+      //   path: 'thoughts',
+      //   select: '-__v',
+      // })
       .select('-__v')
       .then((results) => res.json(results))
       .catch((err) => {
